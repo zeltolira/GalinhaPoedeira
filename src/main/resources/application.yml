@@ -1,3 +1,6 @@
 server:
   servlet:
     context-path: /galinha/api
+springdoc:
+  swagger-ui:
+    path: /public/swagger
