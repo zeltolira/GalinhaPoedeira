@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
 public class GalinhaResponse {
     private UUID idGalinha;
     private String nomeGalinha;
-    private String dataNascimento;
+    private LocalDate dataNascimento;
 
     public GalinhaResponse(Galinha galinha) {
         this.idGalinha = galinha.getIdGalinha();

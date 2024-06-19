@@ -3,10 +3,12 @@ package com.lira.Galinha.poedeira.domain;
 import com.lira.Galinha.poedeira.application.api.request.GalinhaRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -21,8 +23,8 @@ public class Galinha {
     private UUID idGalinha;
     @NotBlank
     private String nomeGalinha;
-    @NotBlank
-    private String dataNascimento;
+    @NotNull
+    private LocalDate dataNascimento;
     private LocalDateTime dataHoraCriacaoGalinha;
     private LocalDateTime dataHoraUltimaAlteracaoGalinha;
 

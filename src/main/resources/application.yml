@@ -1,6 +1,10 @@
 server:
   servlet:
     context-path: /galinha/api
+
 springdoc:
+  api-docs:
+    path: /v3/api-docs
   swagger-ui:
-    path: /public/swagger
+    path: /swagger-ui.html
+
