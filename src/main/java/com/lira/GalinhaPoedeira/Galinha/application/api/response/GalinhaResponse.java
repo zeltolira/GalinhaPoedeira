@@ -13,11 +13,13 @@ public class GalinhaResponse {
     private UUID idGalinha;
     private String nomeGalinha;
     private LocalDate dataNascimento;
+    private String mensagem;
 
     public GalinhaResponse(Galinha galinha) {
         this.idGalinha = galinha.getIdGalinha();
         this.nomeGalinha = galinha.getNomeGalinha();
         this.dataNascimento = galinha.getDataNascimento();
+        this.mensagem = galinha.getMensagem();
 
     }
 }

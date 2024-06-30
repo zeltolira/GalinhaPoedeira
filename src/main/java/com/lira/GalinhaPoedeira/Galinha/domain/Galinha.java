@@ -27,6 +27,7 @@ public class Galinha {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
+    private String mensagem = "Galinha cadastrada com Sucesso!!!";
     private LocalDateTime dataHoraCriacaoGalinha;
     private LocalDateTime dataHoraUltimaAlteracaoGalinha;
 
