@@ -1,0 +1,19 @@
+package com.lira.GalinhaPoedeira.RegistroOvos.application.api;
+
+import com.lira.GalinhaPoedeira.RegistroOvos.application.api.request.RegistroOvosRequest;
+import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.RegistroOvosResponse;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
+
+@Controller
+@RequestMapping("/v1/registro/{idGalinha}")
+public interface RegistraOvosApi {
+
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    RegistroOvosResponse resgistraOvos(@PathVariable UUID idGalinha, @Valid @RequestBody RegistroOvosRequest registroOvosRequest);
+}

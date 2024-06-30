@@ -1,0 +1,11 @@
+package com.lira.GalinhaPoedeira.Galinha.application.repository;
+
+import com.lira.GalinhaPoedeira.Galinha.domain.Galinha;
+
+import java.util.Optional;
+import java.util.UUID;
+
+public interface GalinhaRepository {
+    Galinha saveGalinha(Galinha galinha);
+    Galinha getGalinhaiById(UUID idGalinha);
+}
