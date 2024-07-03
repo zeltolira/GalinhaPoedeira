@@ -2,9 +2,21 @@ server:
   servlet:
     context-path: /galinha/api
 
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/galinha
+    username: postgres
+    password: admin
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        ddl-auto: update
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
 springdoc:
-  api-docs:
-    path: /v3/api-docs
   swagger-ui:
-    path: /swagger-ui.html
+    path: /public/swagger
 
