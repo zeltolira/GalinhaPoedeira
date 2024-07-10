@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -20,7 +21,6 @@ public class RegistroOvos {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "uuid", updatable = false, unique = true, nullable = false)
     private UUID id;
-
     @ManyToOne
     @JoinColumn(name = "galinha_id", nullable = false)
     private Galinha galinha;
@@ -32,11 +32,14 @@ public class RegistroOvos {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataProducao;
+    private LocalDateTime dataHoraCriacaoRegistroOvos;
+    private LocalDateTime dataHoraUltimaAlteracaoRegistroOvos;
 
     public RegistroOvos(Galinha galinha, RegistroOvosRequest registroOvosRequest) {
         this.galinha = galinha;
         this.quantidade = registroOvosRequest.getQuantidade();
         this.dataProducao = registroOvosRequest.getDataProducao();
+        this.dataHoraCriacaoRegistroOvos = LocalDateTime.now();
     }
 
 }

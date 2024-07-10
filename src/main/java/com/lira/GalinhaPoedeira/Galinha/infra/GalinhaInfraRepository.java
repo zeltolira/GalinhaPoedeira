@@ -32,7 +32,7 @@ public class GalinhaInfraRepository implements GalinhaRepository {
     public Galinha getGalinhaiById(UUID idGalinha) {
         log.info("[inicia] GalinhaInfraRepository - getGalinhaiById");
         Galinha galinha = galinhaSpingDataJPARepository.findById(idGalinha)
-                        .orElseThrow(()-> APIException.build(HttpStatus.NOT_FOUND, "Galinha não encontrada!"));
+                        .orElseThrow(()-> APIException.build(HttpStatus.NOT_FOUND, "Galinha não encontrada! " + idGalinha));
         log.info("[finaliza] GalinhaInfraRepository - getGalinhaiById");
         return galinha;
     }

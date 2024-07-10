@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -28,12 +27,9 @@ public class GalinhaApplicationService implements GalinhaService {
 
     @Override
     public GalinhaDetalhadoResponse getGalinhaById(UUID idGalinha) {
-        log.info("[inicia] GalinhaApplicationService - postGalinha");
+        log.info("[inicia] GalinhaApplicationService - getGalinhaById");
         Galinha galinha = galinhaRepository.getGalinhaiById(idGalinha);
-        if (galinha == null){
-            throw new NoSuchElementException("Galinha não encontrado." + idGalinha);
-        }
-        log.info("[finaliza] GalinhaApplicationService - postGalinha");
+        log.info("[finaliza] GalinhaApplicationService - getGalinhaById");
         return new GalinhaDetalhadoResponse(galinha);
     }
 }

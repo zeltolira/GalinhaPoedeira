@@ -1,6 +1,7 @@
 package com.lira.GalinhaPoedeira.Galinha.domain;
 
 import com.lira.GalinhaPoedeira.Galinha.application.api.request.GalinhaRequest;
+import com.lira.GalinhaPoedeira.RegistroOvos.domain.RegistroOvos;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @ToString
@@ -31,12 +33,12 @@ public class Galinha {
     private LocalDateTime dataHoraCriacaoGalinha;
     private LocalDateTime dataHoraUltimaAlteracaoGalinha;
 
+    @OneToMany(mappedBy = "galinha", fetch = FetchType.EAGER)
+    private List<RegistroOvos> registroOvos;
+
     public Galinha(GalinhaRequest galinhaRequest) {
         this.nomeGalinha = galinhaRequest.getNomeGalinha();
         this.dataNascimento = galinhaRequest.getDataNascimento();
         this.dataHoraCriacaoGalinha = LocalDateTime.now();
-
     }
-
-
 }
