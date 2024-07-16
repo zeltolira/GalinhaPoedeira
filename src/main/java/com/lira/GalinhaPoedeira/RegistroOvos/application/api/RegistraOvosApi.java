@@ -1,6 +1,7 @@
 package com.lira.GalinhaPoedeira.RegistroOvos.application.api;
 
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.request.RegistroOvosRequest;
+import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.ProducaoMensalResponse;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.ProducaoPorDataResponse;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.RegistroOvosResponse;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +22,11 @@ public interface RegistraOvosApi {
     @ResponseStatus(code = HttpStatus.CREATED)
     RegistroOvosResponse resgistraOvos(@PathVariable UUID idGalinha, @Valid @RequestBody RegistroOvosRequest registroOvosRequest);
 
-    @GetMapping("/producao")
+    @GetMapping("/producao-diaria")
     @ResponseStatus(code = HttpStatus.OK)
-    List<ProducaoPorDataResponse> consultaProducaoPorData(@RequestParam("data") LocalDate data);
+    List<ProducaoPorDataResponse> consultaProducaoDiariaPorGalinha(@RequestParam("data") LocalDate data);
+
+    @GetMapping("/producao-mensal")
+    @ResponseStatus(code = HttpStatus.OK)
+    List<ProducaoMensalResponse> consultaProducaoMensal(@RequestParam("data") YearMonth data);
 }

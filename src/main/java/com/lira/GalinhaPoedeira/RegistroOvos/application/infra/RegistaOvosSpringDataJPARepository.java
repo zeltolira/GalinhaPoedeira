@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface RegistaOvosSpringDataJPARepository extends JpaRepository <RegistroOvos, UUID> {
     List<RegistroOvos> findByDataProducao(LocalDate data);
+    List<RegistroOvos> findByDataProducaoBetween(LocalDate atDay, LocalDate atEndOfMonth);
 }
