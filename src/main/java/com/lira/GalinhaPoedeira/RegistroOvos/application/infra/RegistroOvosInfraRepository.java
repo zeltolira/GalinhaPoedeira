@@ -1,6 +1,7 @@
 package com.lira.GalinhaPoedeira.RegistroOvos.application.infra;
 
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.ProducaoPorDataResponse;
+import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.RegistroOvosResponse;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.repository.RegistroOvosRepository;
 import com.lira.GalinhaPoedeira.RegistroOvos.domain.RegistroOvos;
 import lombok.RequiredArgsConstructor;
@@ -25,22 +26,31 @@ public class RegistroOvosInfraRepository implements RegistroOvosRepository {
         return registroOvos;
     }
     @Override
-        public List<ProducaoPorDataResponse> findProducaoByData(LocalDate data) {
-            log.info("[inicia] RegistroOvosInfraRepository - findProducaoByData");
-            List<RegistroOvos> producoes = registaOvosSpringDataJPARepository.findByDataProducao(data);
-            if (producoes.isEmpty()){
-                log.info("[finaliza] RegistroOvosInfraRepository - findProducaoByData");
-                return List.of();
-            }
-            List<ProducaoPorDataResponse> resposta = producoes.stream()
-                    .collect(Collectors.groupingBy(
-                            producao -> producao.getGalinha().getNomeGalinha(),
-                            Collectors.summingInt(RegistroOvos::getQuantidade)
-                    ))
-                    .entrySet().stream()
-                    .map(entry -> new ProducaoPorDataResponse(entry.getKey(), entry.getValue()))
-                    .collect(Collectors.toList());
+    public List<ProducaoPorDataResponse> findProducaoByData(LocalDate data) {
+        log.info("[inicia] RegistroOvosInfraRepository - findProducaoByData");
+        List<RegistroOvos> producoes = registaOvosSpringDataJPARepository.findByDataProducao(data);
+        if (producoes.isEmpty()) {
             log.info("[finaliza] RegistroOvosInfraRepository - findProducaoByData");
-            return resposta;
+            return List.of();
+        }
+        List<ProducaoPorDataResponse> resposta = producoes.stream()
+                .collect(Collectors.groupingBy(
+                        producao -> producao.getGalinha().getNomeGalinha(),
+                        Collectors.toList()
+                ))
+                .entrySet().stream()
+                .map(entry -> {
+                    List<RegistroOvosResponse> registrosResponse = entry.getValue().stream()
+                            .map(RegistroOvosResponse::new)
+                            .collect(Collectors.toList());
+                    return new ProducaoPorDataResponse(
+                            entry.getKey(),
+                            entry.getValue().stream().mapToInt(RegistroOvos::getQuantidade).sum(),
+                            entry.getValue().get(0).getGalinha()
+                    );
+                })
+                .collect(Collectors.toList());
+        log.info("[finaliza] RegistroOvosInfraRepository - findProducaoByData");
+        return resposta;
     }
 }

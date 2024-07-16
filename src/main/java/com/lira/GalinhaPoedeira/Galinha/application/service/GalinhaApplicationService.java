@@ -21,8 +21,9 @@ public class GalinhaApplicationService implements GalinhaService {
     public GalinhaResponse postGalinha(GalinhaRequest galinhaRequest) {
         log.info("[inicia] GalinhaApplicationService - postGalinha");
         Galinha galinha = galinhaRepository.saveGalinha(new Galinha(galinhaRequest));
+
         log.info("[finaliza] GalinhaApplicationService - postGalinha");
-        return new GalinhaResponse(galinha);
+        return new GalinhaResponse(galinha, "Galinha cadastrada com Sucesso!!!");
     }
 
     @Override

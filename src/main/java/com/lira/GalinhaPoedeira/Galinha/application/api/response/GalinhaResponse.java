@@ -15,11 +15,11 @@ public class GalinhaResponse {
     private LocalDate dataNascimento;
     private String mensagem;
 
-    public GalinhaResponse(Galinha galinha) {
+    public GalinhaResponse(Galinha galinha, String mensagem) {
         this.idGalinha = galinha.getIdGalinha();
         this.nomeGalinha = galinha.getNomeGalinha();
         this.dataNascimento = galinha.getDataNascimento();
-        this.mensagem = galinha.getMensagem();
+        this.mensagem = mensagem;
 
     }
 }
