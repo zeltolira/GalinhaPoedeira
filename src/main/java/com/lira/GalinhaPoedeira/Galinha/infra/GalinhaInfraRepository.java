@@ -44,4 +44,12 @@ public class GalinhaInfraRepository implements GalinhaRepository {
         log.info("[finaliza] GalinhaInfraRepository - getAllGalinhas");
         return galinhas;
     }
+
+    @Override
+    public void deletaGalinha(Galinha galinha) {
+        log.info("[inicia] GalinhaInfraRepository - deletaGalinha");
+        galinhaSpringDataJPARepository.delete(galinha);
+        log.info("[finaliza] GalinhaInfraRepository - deletaGalinha");
+
+    }
 }

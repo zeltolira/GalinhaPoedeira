@@ -8,11 +8,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @ToString
 @Getter
 public class GalinhaListReponse {
+    private UUID idGalinha;
     private String nomeGalinha;
     private LocalDate dataNascimento;
 
@@ -23,6 +25,7 @@ public class GalinhaListReponse {
     }
 
     public GalinhaListReponse(Galinha galinha) {
+        this.idGalinha = galinha.getIdGalinha();
         this.nomeGalinha = galinha.getNomeGalinha();
         this.dataNascimento = galinha.getDataNascimento();
     }

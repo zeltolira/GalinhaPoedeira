@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @ToString
 @Getter
 public class GalinhaPatchRequest {
+    @NotNull
     private String nomeGalinha;
     private LocalDate dataNascimento;
 }

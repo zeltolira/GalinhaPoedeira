@@ -32,4 +32,7 @@ public interface GalinhaApi {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     void patchGalinhaById(@PathVariable UUID idGalinha, @Valid @RequestBody GalinhaPatchRequest galinhaPatchRequest);
 
+    @DeleteMapping("/{idGalinha}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void deleteGalinhaById(@PathVariable UUID idGalinha);
 }

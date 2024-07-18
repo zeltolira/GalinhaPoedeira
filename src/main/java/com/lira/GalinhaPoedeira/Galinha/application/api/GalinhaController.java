@@ -45,6 +45,18 @@ public class GalinhaController implements GalinhaApi {
 
     @Override
     public void patchGalinhaById(UUID idGalinha, GalinhaPatchRequest galinhaPatchRequest) {
-        
+        log.info("[inicia] GalinhaController - patchGalinhaById");
+        log.info("[idGalinnha] {}", idGalinha);
+        galinhaService.patchGalinhaById(idGalinha, galinhaPatchRequest);
+        log.info("[finaliza] GalinhaController - patchGalinhaById");
+
+    }
+
+    @Override
+    public void deleteGalinhaById(UUID idGalinha) {
+        log.info("[inicia] GalinhaController - deleteGalinhaById");
+        log.info("[idGalinnha] {}", idGalinha);
+        galinhaService.deletaGalinha(idGalinha);
+        log.info("[finaliza] GalinhaController - deleteGalinhaById");
     }
 }

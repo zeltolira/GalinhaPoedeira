@@ -1,5 +1,6 @@
 package com.lira.GalinhaPoedeira.Galinha.application.service;
 
+import com.lira.GalinhaPoedeira.Galinha.application.api.request.GalinhaPatchRequest;
 import com.lira.GalinhaPoedeira.Galinha.application.api.request.GalinhaRequest;
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaDetalhadoResponse;
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaListReponse;
@@ -23,7 +24,6 @@ public class GalinhaApplicationService implements GalinhaService {
     public GalinhaResponse postGalinha(GalinhaRequest galinhaRequest) {
         log.info("[inicia] GalinhaApplicationService - postGalinha");
         Galinha galinha = galinhaRepository.saveGalinha(new Galinha(galinhaRequest));
-
         log.info("[finaliza] GalinhaApplicationService - postGalinha");
         return new GalinhaResponse(galinha, "Galinha cadastrada com Sucesso!!!");
     }
@@ -42,5 +42,24 @@ public class GalinhaApplicationService implements GalinhaService {
         List<Galinha> galinhas = galinhaRepository.getAllGalinhas();
         log.info("[finaliza] GalinhaApplicationService - getAllGalinhas");
         return GalinhaListReponse.converte(galinhas);
+    }
+
+    @Override
+    public void patchGalinhaById(UUID idGalinha, GalinhaPatchRequest galinhaPatchRequest) {
+        log.info("[inicia] GalinhaApplicationService - patchGalinhaById");
+        Galinha galinha = galinhaRepository.getGalinhaiById(idGalinha);
+        galinha.patchGalinha(galinhaPatchRequest);
+        galinhaRepository.saveGalinha(galinha);
+        log.info("[finaliza] GalinhaApplicationService - patchGalinhaById");
+
+    }
+
+    @Override
+    public void deletaGalinha(UUID idGalinha) {
+        log.info("[inicia] GalinhaApplicationService - deletaGalinha");
+        Galinha galinha = galinhaRepository.getGalinhaiById(idGalinha);
+        galinhaRepository.deletaGalinha(galinha);
+        log.info("[finaliza] GalinhaApplicationService - deletaGalinha");
+
     }
 }
