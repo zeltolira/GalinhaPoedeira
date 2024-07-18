@@ -42,13 +42,14 @@ public class RegistroOvosInfraRepository implements RegistroOvosRepository {
                 ))
                 .entrySet().stream()
                 .map(entry -> {
-                    List<RegistroOvosResponse> registrosResponse = entry.getValue().stream()
-                            .map(RegistroOvosResponse::new)
-                            .collect(Collectors.toList());
+//                    List<RegistroOvosResponse> registrosResponse = entry.getValue().stream()
+//                            .map(RegistroOvosResponse::new)
+//                            .collect(Collectors.toList());
                     return new ProducaoPorDataResponse(
                             entry.getKey(),
                             entry.getValue().stream().mapToInt(RegistroOvos::getQuantidade).sum(),
                             entry.getValue().get(0).getGalinha()
+//                            registrosResponse
                     );
                 })
                 .collect(Collectors.toList());

@@ -31,6 +31,7 @@ public class RegistroOvos {
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "data_producao")
     private LocalDate dataProducao;
     private LocalDateTime dataHoraCriacaoRegistroOvos;
     private LocalDateTime dataHoraUltimaAlteracaoRegistroOvos;
