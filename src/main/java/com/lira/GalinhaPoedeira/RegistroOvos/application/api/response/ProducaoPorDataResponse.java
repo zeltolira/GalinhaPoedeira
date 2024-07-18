@@ -12,15 +12,13 @@ import java.util.stream.Collectors;
 @ToString
 public class ProducaoPorDataResponse {
     private String nomeGalinha;
-    private int quantidade;
     @JsonIgnore
     private Galinha galinha;
     private List<RegistroOvosResponse> registroOvos;
     private Integer producaoDiaria;
-    public ProducaoPorDataResponse(String nomeGalinha, int quantidade, Galinha galinha) {
+    public ProducaoPorDataResponse(String nomeGalinha, Galinha galinha) {
         this.galinha = galinha;
         this.nomeGalinha = nomeGalinha;
-        this.quantidade = quantidade;
         this.registroOvos = galinha.getRegistroOvos().stream()
                 .map(RegistroOvosResponse::new)
                 .collect(Collectors.toList());

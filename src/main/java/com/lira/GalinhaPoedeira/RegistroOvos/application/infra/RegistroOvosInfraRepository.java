@@ -1,5 +1,6 @@
 package com.lira.GalinhaPoedeira.RegistroOvos.application.infra;
 
+import com.lira.GalinhaPoedeira.Galinha.domain.Galinha;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.ProducaoMensalResponse;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.ProducaoPorDataResponse;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.RegistroOvosResponse;
@@ -29,8 +30,10 @@ public class RegistroOvosInfraRepository implements RegistroOvosRepository {
     }
     @Override
     public List<ProducaoPorDataResponse> consultaProducaoPorData(LocalDate data) {
-        log.info("[inicia] RegistroOvosInfraRepository - findProducaoByData");
+        log.info("[inicia] RegistroOvosInfraRepository - findProducaoByData com data: {}", data);
         List<RegistroOvos> producoes = registaOvosSpringDataJPARepository.findByDataProducao(data);
+        log.info("Registros encontrados: {}", producoes.size());
+        producoes.forEach(producao -> log.info("Registro encontrado: {}", producao));
         if (producoes.isEmpty()) {
             log.info("[finaliza] RegistroOvosInfraRepository - findProducaoByData");
             return List.of();
@@ -42,14 +45,10 @@ public class RegistroOvosInfraRepository implements RegistroOvosRepository {
                 ))
                 .entrySet().stream()
                 .map(entry -> {
-//                    List<RegistroOvosResponse> registrosResponse = entry.getValue().stream()
-//                            .map(RegistroOvosResponse::new)
-//                            .collect(Collectors.toList());
-                    return new ProducaoPorDataResponse(
-                            entry.getKey(),
-                            entry.getValue().stream().mapToInt(RegistroOvos::getQuantidade).sum(),
-                            entry.getValue().get(0).getGalinha()
-//                            registrosResponse
+                           String nomeGalinha = entry.getKey();
+                           Galinha galinha = entry.getValue().get(0).getGalinha();
+                            log.info("Galinha: {}", nomeGalinha);
+                    return new ProducaoPorDataResponse(nomeGalinha, galinha
                     );
                 })
                 .collect(Collectors.toList());

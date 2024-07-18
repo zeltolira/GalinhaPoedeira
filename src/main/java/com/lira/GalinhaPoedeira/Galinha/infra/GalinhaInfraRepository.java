@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -34,5 +35,13 @@ public class GalinhaInfraRepository implements GalinhaRepository {
                         .orElseThrow(()-> APIException.build(HttpStatus.NOT_FOUND, "Galinha não encontrada! " + idGalinha));
         log.info("[finaliza] GalinhaInfraRepository - getGalinhaiById");
         return galinha;
+    }
+
+    @Override
+    public List<Galinha> getAllGalinhas() {
+        log.info("[inicia] GalinhaInfraRepository - getAllGalinhas");
+        List<Galinha> galinhas = galinhaSpringDataJPARepository.findAll();
+        log.info("[finaliza] GalinhaInfraRepository - getAllGalinhas");
+        return galinhas;
     }
 }

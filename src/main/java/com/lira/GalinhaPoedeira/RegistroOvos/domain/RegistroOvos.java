@@ -1,5 +1,6 @@
 package com.lira.GalinhaPoedeira.RegistroOvos.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.lira.GalinhaPoedeira.Galinha.domain.Galinha;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.request.RegistroOvosRequest;
 import jakarta.persistence.*;
@@ -23,14 +24,22 @@ public class RegistroOvos {
     private UUID id;
     @ManyToOne
     @JoinColumn(name = "galinha_id", nullable = false)
+    @JsonBackReference
     private Galinha galinha;
-
+    @Override
+    public String toString(){
+        return "RegistroOvos{" +
+                "id=" + id +
+                ", dataProducao=" + dataProducao +
+                ", quantidade= " + quantidade +
+                '}';
+    }
     @NotNull
     @Min(1)
     private int quantidade;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "data_producao")
     private LocalDate dataProducao;
     private LocalDateTime dataHoraCriacaoRegistroOvos;

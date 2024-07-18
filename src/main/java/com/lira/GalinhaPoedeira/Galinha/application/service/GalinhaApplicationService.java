@@ -2,6 +2,7 @@ package com.lira.GalinhaPoedeira.Galinha.application.service;
 
 import com.lira.GalinhaPoedeira.Galinha.application.api.request.GalinhaRequest;
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaDetalhadoResponse;
+import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaListReponse;
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaResponse;
 import com.lira.GalinhaPoedeira.Galinha.application.repository.GalinhaRepository;
 import com.lira.GalinhaPoedeira.Galinha.domain.Galinha;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -32,5 +34,13 @@ public class GalinhaApplicationService implements GalinhaService {
         Galinha galinha = galinhaRepository.getGalinhaiById(idGalinha);
         log.info("[finaliza] GalinhaApplicationService - getGalinhaById");
         return new GalinhaDetalhadoResponse(galinha);
+    }
+
+    @Override
+    public List<GalinhaListReponse> getAllGalinhas() {
+        log.info("[inicia] GalinhaApplicationService - getAllGalinhas");
+        List<Galinha> galinhas = galinhaRepository.getAllGalinhas();
+        log.info("[finaliza] GalinhaApplicationService - getAllGalinhas");
+        return GalinhaListReponse.converte(galinhas);
     }
 }

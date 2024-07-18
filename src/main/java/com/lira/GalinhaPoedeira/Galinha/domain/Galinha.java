@@ -1,5 +1,6 @@
 package com.lira.GalinhaPoedeira.Galinha.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lira.GalinhaPoedeira.Galinha.application.api.request.GalinhaRequest;
 import com.lira.GalinhaPoedeira.RegistroOvos.domain.RegistroOvos;
 import jakarta.persistence.*;
@@ -15,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@ToString
 @Entity
 @Data
 @NoArgsConstructor
@@ -34,7 +34,16 @@ public class Galinha {
     private LocalDateTime dataHoraUltimaAlteracaoGalinha;
 
     @OneToMany(mappedBy = "galinha", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<RegistroOvos> registroOvos;
+
+    @Override
+    public String toString(){
+        return "Galinha{" +
+                "id=" + idGalinha +
+                ", nomeGalinha='" + nomeGalinha + '\'' +
+                '}';
+    }
 
     public Galinha(GalinhaRequest galinhaRequest) {
         this.nomeGalinha = galinhaRequest.getNomeGalinha();
