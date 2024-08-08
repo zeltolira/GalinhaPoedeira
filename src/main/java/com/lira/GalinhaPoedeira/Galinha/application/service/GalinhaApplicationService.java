@@ -34,7 +34,7 @@ public class GalinhaApplicationService implements GalinhaService {
     @Override
     public GalinhaDetalhadoResponse getGalinhaById(UUID idGalinha) {
         log.info("[inicia] GalinhaApplicationService - getGalinhaById");
-        Galinha galinha = galinhaRepository.getGalinhaiById(idGalinha);
+        Galinha galinha = galinhaRepository.getGalinhaById(idGalinha);
         log.info("[finaliza] GalinhaApplicationService - getGalinhaById");
         return new GalinhaDetalhadoResponse(galinha);
     }
@@ -50,7 +50,7 @@ public class GalinhaApplicationService implements GalinhaService {
     @Override
     public void patchGalinhaById(UUID idGalinha, GalinhaPatchRequest galinhaPatchRequest) {
         log.info("[inicia] GalinhaApplicationService - patchGalinhaById");
-        Galinha galinha = galinhaRepository.getGalinhaiById(idGalinha);
+        Galinha galinha = galinhaRepository.getGalinhaById(idGalinha);
         galinha.patchGalinha(galinhaPatchRequest);
         galinhaRepository.saveGalinha(galinha);
         log.info("[finaliza] GalinhaApplicationService - patchGalinhaById");
@@ -60,7 +60,7 @@ public class GalinhaApplicationService implements GalinhaService {
     @Override
     public void deletaGalinha(UUID idGalinha) {
         log.info("[inicia] GalinhaApplicationService - deletaGalinha");
-        Galinha galinha = galinhaRepository.getGalinhaiById(idGalinha);
+        Galinha galinha = galinhaRepository.getGalinhaById(idGalinha);
         galinhaRepository.deletaGalinha(galinha);
         log.info("[finaliza] GalinhaApplicationService - deletaGalinha");
 

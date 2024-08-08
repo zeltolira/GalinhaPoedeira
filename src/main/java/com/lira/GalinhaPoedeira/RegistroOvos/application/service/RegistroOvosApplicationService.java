@@ -4,7 +4,6 @@ import com.lira.GalinhaPoedeira.Galinha.application.repository.GalinhaRepository
 import com.lira.GalinhaPoedeira.Galinha.domain.Galinha;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.request.RegistroOvosRequest;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.ProducaoMensalResponse;
-import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.ProducaoPorDataResponse;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.RegistroOvosResponse;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.repository.RegistroOvosRepository;
 import com.lira.GalinhaPoedeira.RegistroOvos.domain.RegistroOvos;
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
 import java.util.UUID;
@@ -27,7 +25,7 @@ public class RegistroOvosApplicationService implements RegistroOvosService {
     @Override
     public RegistroOvosResponse registrarOvos(UUID idGalinha, RegistroOvosRequest registroOvosRequest) {
         log.info("[inicia] RegistroOvosApplicationService - registrarOvos");
-        Galinha galinha = galinhaRepository.getGalinhaiById(idGalinha);
+        Galinha galinha = galinhaRepository.getGalinhaById(idGalinha);
         RegistroOvos registroOvos = registroOvosRepository.salvaOvos(new RegistroOvos(galinha, registroOvosRequest));
         log.info("[finaliza] RegistroOvosApplicationService - registrarOvos");
         return new RegistroOvosResponse(registroOvos);

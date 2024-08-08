@@ -23,6 +23,5 @@ public class RegistroOvosResponse {
         this.galinha = registroOvos.getGalinha();
         this.quantidade = registroOvos.getQuantidade();
         this.dataProducao = registroOvos.getDataProducao();
-
     }
 }

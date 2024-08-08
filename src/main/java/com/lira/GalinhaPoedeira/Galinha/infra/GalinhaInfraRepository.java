@@ -29,7 +29,7 @@ public class GalinhaInfraRepository implements GalinhaRepository {
     }
 
     @Override
-    public Galinha getGalinhaiById(UUID idGalinha) {
+    public Galinha getGalinhaById(UUID idGalinha) {
         log.info("[inicia] GalinhaInfraRepository - getGalinhaiById");
         Galinha galinha = galinhaSpringDataJPARepository.findById(idGalinha)
                         .orElseThrow(()-> APIException.build(HttpStatus.NOT_FOUND, "Galinha não encontrada! " + idGalinha));
