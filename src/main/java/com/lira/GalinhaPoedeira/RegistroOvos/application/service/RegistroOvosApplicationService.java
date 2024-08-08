@@ -32,13 +32,6 @@ public class RegistroOvosApplicationService implements RegistroOvosService {
         log.info("[finaliza] RegistroOvosApplicationService - registrarOvos");
         return new RegistroOvosResponse(registroOvos);
     }
-    @Override
-    public List<ProducaoPorDataResponse> consultaProducaoPorData(LocalDate data) {
-        log.info("[inicia] RegistroOvosApplicationService - consultaProducaoPorData");
-        List<ProducaoPorDataResponse> producao = registroOvosRepository.consultaProducaoPorData(data);
-        log.info("[finaliza] RegistroOvosApplicationService - consultaProducaoPorData");
-        return producao;
-    }
 
     @Override
     public List<ProducaoMensalResponse> consultaProducaoMensal(YearMonth data) {
@@ -46,6 +39,20 @@ public class RegistroOvosApplicationService implements RegistroOvosService {
         ProducaoMensalResponse producao = registroOvosRepository.consultaProducaoMensal(data.atDay(1));
         log.info("[finaliza] RegistroOvosApplicationService - consultaProducaoMensal");
         return List.of(producao);
+    }
+
+    @Override
+    public void deleteOvoById(UUID id) {
+        log.info("[inicia] RegistroOvosApplicationService - deleteOvoById");
+        RegistroOvos registroOvos = registroOvosRepository.findById(id);
+        if (registroOvos != null) {
+            registroOvosRepository.deleteById(id);
+            log.info("Ovo com ID {} excluído com sucesso", id);
+        } else {
+            log.warn("Ovo com ID {} não encontrado", id);
+        }
+        log.info("[finaliza] RegistroOvosApplicationService - deleteOvoById");
+
     }
 }
 

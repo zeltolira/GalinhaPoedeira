@@ -7,9 +7,12 @@ import com.lira.GalinhaPoedeira.RegistroOvos.domain.RegistroOvos;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.UUID;
 
 public interface RegistroOvosRepository {
     RegistroOvos salvaOvos(RegistroOvos registroOvos);
-    List<ProducaoPorDataResponse> consultaProducaoPorData(LocalDate data);
     ProducaoMensalResponse consultaProducaoMensal(LocalDate atDay);
+    RegistroOvos findById(UUID id);
+    void deleteById(UUID id);
+    List<RegistroOvos> consultaProducaoDiariaPorGalinha(LocalDate data);
 }

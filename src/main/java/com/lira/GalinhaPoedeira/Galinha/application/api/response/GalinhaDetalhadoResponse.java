@@ -19,7 +19,7 @@ public class GalinhaDetalhadoResponse {
     private List<RegistroOvosResponse> registroOvos;
     private Integer producaoGalinha;
 
-        public GalinhaDetalhadoResponse(Galinha galinha) {
+    public GalinhaDetalhadoResponse(Galinha galinha) {
         this.idGalinha = galinha.getIdGalinha();
         this.nomeGalinha = galinha.getNomeGalinha();
         this.dataNascimento = galinha.getDataNascimento();
@@ -28,9 +28,18 @@ public class GalinhaDetalhadoResponse {
                 .collect(Collectors.toList());
         this.producaoGalinha = calcularSomaOvos();
     }
+
     private Integer calcularSomaOvos() {
+        if (registroOvos != null) {
             return registroOvos.stream()
                     .mapToInt(RegistroOvosResponse::getQuantidade)
                     .sum();
+        }
+        return 0;
+    }
+    public static List<GalinhaDetalhadoResponse> converter(List<Galinha> galinhas) {
+            return galinhas.stream()
+                    .map(GalinhaDetalhadoResponse::new)
+                    .collect(Collectors.toList());
     }
 }

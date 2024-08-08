@@ -14,10 +14,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@ToString
 @Data
 @NoArgsConstructor
 public class Galinha {
@@ -38,12 +40,13 @@ public class Galinha {
     @JsonManagedReference
     private List<RegistroOvos> registroOvos;
 
-    @Override
-    public String toString(){
-        return "Galinha{" +
-                "id=" + idGalinha +
-                ", nomeGalinha='" + nomeGalinha + '\'' +
-                '}';
+    public Galinha(Galinha galinha) {
+        this.idGalinha = galinha.getIdGalinha();
+        this.nomeGalinha = galinha.getNomeGalinha();
+        this.dataNascimento = galinha.getDataNascimento();
+        this.dataHoraCriacaoGalinha = galinha.getDataHoraCriacaoGalinha();
+        this.dataHoraUltimaAlteracaoGalinha = galinha.getDataHoraUltimaAlteracaoGalinha();
+        this.registroOvos = new ArrayList<>();
     }
 
     public Galinha(GalinhaRequest galinhaRequest) {

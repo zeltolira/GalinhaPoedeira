@@ -29,14 +29,6 @@ public class RegistroOvoController implements RegistraOvosApi {
     }
 
     @Override
-    public List<ProducaoPorDataResponse> consultaProducaoDiariaPorGalinha(LocalDate data) {
-        log.info("[inicia] RegistroOvosController - consultaProducaoDiariaPorGalinha");
-        List<ProducaoPorDataResponse> producaoGalinha = registroOvosService.consultaProducaoPorData(data);
-        log.info("[finaliza] RegistroOvosController - consultaProducaoDiariaPorGalinha");
-        return producaoGalinha;
-    }
-
-    @Override
     public List<ProducaoMensalResponse> consultaProducaoMensal(YearMonth data) {
         log.info("[inicia] RegistroOvosController - consultaProducaoMensal");
         List<ProducaoMensalResponse> producaoMensal = registroOvosService.consultaProducaoMensal(data);
@@ -44,4 +36,10 @@ public class RegistroOvoController implements RegistraOvosApi {
         return producaoMensal;
     }
 
+    @Override
+    public void deleteOvoById(UUID id) {
+        log.info("[inicia] RegistroOvosController - deleteOvoById");
+        registroOvosService.deleteOvoById(id);
+        log.info("[finaliza] RegistroOvosController - deleteOvoById");
+    }
 }

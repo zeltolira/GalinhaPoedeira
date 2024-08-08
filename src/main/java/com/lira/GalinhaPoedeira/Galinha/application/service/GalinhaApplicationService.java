@@ -7,18 +7,21 @@ import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaListRepo
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaResponse;
 import com.lira.GalinhaPoedeira.Galinha.application.repository.GalinhaRepository;
 import com.lira.GalinhaPoedeira.Galinha.domain.Galinha;
+import com.lira.GalinhaPoedeira.RegistroOvos.application.repository.RegistroOvosRepository;
+import com.lira.GalinhaPoedeira.RegistroOvos.domain.RegistroOvos;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 @Log4j2
 @RequiredArgsConstructor
 public class GalinhaApplicationService implements GalinhaService {
     private final GalinhaRepository galinhaRepository;
+    private final RegistroOvosRepository registroOvoRepository;
 
     @Override
     public GalinhaResponse postGalinha(GalinhaRequest galinhaRequest) {
@@ -61,5 +64,25 @@ public class GalinhaApplicationService implements GalinhaService {
         galinhaRepository.deletaGalinha(galinha);
         log.info("[finaliza] GalinhaApplicationService - deletaGalinha");
 
+    }
+
+    @Override
+    public List<GalinhaDetalhadoResponse> consultaProducaoDiariaPorGalinha(LocalDate data) {
+        log.info("[inicia] GalinhaApplicationService - consultaProducaoDiariaPorGalinha");
+        List<RegistroOvos> listRegistroOvos = registroOvoRepository.consultaProducaoDiariaPorGalinha(data);
+        log.info("[teste] GalinhaApplicationService - consultaProducaoDiariaPorGalinha");
+        Map<UUID, Galinha> galinhasMap = new HashMap<>();
+        for (RegistroOvos registroOvos : listRegistroOvos){
+            Galinha galinha = registroOvos.getGalinha();
+            if (!galinhasMap.containsKey(galinha.getIdGalinha())){
+                Galinha novaGalinha = new Galinha(galinha);
+                galinhasMap.put(novaGalinha.getIdGalinha(), novaGalinha);
+            }
+            galinhasMap.get(galinha.getIdGalinha()).getRegistroOvos().add(registroOvos);
+        }
+        List<Galinha> galinhas = new ArrayList<>(galinhasMap.values());
+        List<GalinhaDetalhadoResponse> galinhaDetalhadoResponse = GalinhaDetalhadoResponse.converter(galinhas);
+        log.info("[finaliza] GalinhaApplicationService - consultaProducaoDiariaPorGalinha");
+        return galinhaDetalhadoResponse;
     }
 }

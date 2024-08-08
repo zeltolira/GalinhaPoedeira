@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,5 +59,13 @@ public class GalinhaController implements GalinhaApi {
         log.info("[idGalinnha] {}", idGalinha);
         galinhaService.deletaGalinha(idGalinha);
         log.info("[finaliza] GalinhaController - deleteGalinhaById");
+    }
+
+    @Override
+    public List<GalinhaDetalhadoResponse> consultaProducaoDiariaPorGalinha(LocalDate data) {
+        log.info("[inicia] GalinhaController - consultaProducaoDiariaPorGalinha");
+        List<GalinhaDetalhadoResponse> galinhaDetalhadoResponse = galinhaService.consultaProducaoDiariaPorGalinha(data);
+        log.info("[finaliza] GalinhaController - consultaProducaoDiariaPorGalinha");
+        return galinhaDetalhadoResponse;
     }
 }

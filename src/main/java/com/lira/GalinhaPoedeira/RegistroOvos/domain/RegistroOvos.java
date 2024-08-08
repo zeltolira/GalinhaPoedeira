@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@ToString
 @Data
 @NoArgsConstructor
 public class RegistroOvos {
@@ -26,14 +28,6 @@ public class RegistroOvos {
     @JoinColumn(name = "galinha_id", nullable = false)
     @JsonBackReference
     private Galinha galinha;
-    @Override
-    public String toString(){
-        return "RegistroOvos{" +
-                "id=" + id +
-                ", dataProducao=" + dataProducao +
-                ", quantidade= " + quantidade +
-                '}';
-    }
     @NotNull
     @Min(1)
     private int quantidade;

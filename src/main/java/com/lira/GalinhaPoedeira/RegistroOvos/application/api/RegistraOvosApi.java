@@ -22,11 +22,11 @@ public interface RegistraOvosApi {
     @ResponseStatus(code = HttpStatus.CREATED)
     RegistroOvosResponse resgistraOvos(@PathVariable UUID idGalinha, @Valid @RequestBody RegistroOvosRequest registroOvosRequest);
 
-    @GetMapping("/producao-diaria")
-    @ResponseStatus(code = HttpStatus.OK)
-    List<ProducaoPorDataResponse> consultaProducaoDiariaPorGalinha(@RequestParam("data") LocalDate data);
-
     @GetMapping("/producao-mensal")
     @ResponseStatus(code = HttpStatus.OK)
     List<ProducaoMensalResponse> consultaProducaoMensal(@RequestParam("data") YearMonth data);
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void deleteOvoById(@PathVariable UUID id);
 }

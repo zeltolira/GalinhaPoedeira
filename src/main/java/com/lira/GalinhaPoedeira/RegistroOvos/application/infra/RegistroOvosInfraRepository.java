@@ -3,7 +3,6 @@ package com.lira.GalinhaPoedeira.RegistroOvos.application.infra;
 import com.lira.GalinhaPoedeira.Galinha.domain.Galinha;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.ProducaoMensalResponse;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.ProducaoPorDataResponse;
-import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.RegistroOvosResponse;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.repository.RegistroOvosRepository;
 import com.lira.GalinhaPoedeira.RegistroOvos.domain.RegistroOvos;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Repository
@@ -28,33 +28,7 @@ public class RegistroOvosInfraRepository implements RegistroOvosRepository {
         log.info("[finaliza] RegistroOvosInfraRepository - saveOvos");
         return registroOvos;
     }
-    @Override
-    public List<ProducaoPorDataResponse> consultaProducaoPorData(LocalDate data) {
-        log.info("[inicia] RegistroOvosInfraRepository - findProducaoByData com data: {}", data);
-        List<RegistroOvos> producoes = registaOvosSpringDataJPARepository.findByDataProducao(data);
-        log.info("Registros encontrados: {}", producoes.size());
-        producoes.forEach(producao -> log.info("Registro encontrado: {}", producao));
-        if (producoes.isEmpty()) {
-            log.info("[finaliza] RegistroOvosInfraRepository - findProducaoByData");
-            return List.of();
-        }
-        List<ProducaoPorDataResponse> resposta = producoes.stream()
-                .collect(Collectors.groupingBy(
-                        producao -> producao.getGalinha().getNomeGalinha(),
-                        Collectors.toList()
-                ))
-                .entrySet().stream()
-                .map(entry -> {
-                           String nomeGalinha = entry.getKey();
-                           Galinha galinha = entry.getValue().get(0).getGalinha();
-                            log.info("Galinha: {}", nomeGalinha);
-                    return new ProducaoPorDataResponse(nomeGalinha, galinha
-                    );
-                })
-                .collect(Collectors.toList());
-        log.info("[finaliza] RegistroOvosInfraRepository - findProducaoByData");
-        return resposta;
-    }
+
 
     @Override
     public ProducaoMensalResponse consultaProducaoMensal(LocalDate data) {
@@ -67,5 +41,23 @@ public class RegistroOvosInfraRepository implements RegistroOvosRepository {
                         .sum();
         log.info("[finaliza] RegistroOvosInfraRepository - consultaProducaoMensal");
         return new ProducaoMensalResponse(producaoMensal);
+    }
+
+    @Override
+    public RegistroOvos findById(UUID id) {
+        return registaOvosSpringDataJPARepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteById(UUID id) {
+        registaOvosSpringDataJPARepository.deleteById(id);
+    }
+
+    @Override
+    public List<RegistroOvos> consultaProducaoDiariaPorGalinha(LocalDate data) {
+        log.info("[inicia] RegistroOvosInfraRepository - consultaProducaoDiariaPorGalinha");
+        List<RegistroOvos> registroOvos = registaOvosSpringDataJPARepository.findByDataProducao(data);
+        log.info("[finaliza] RegistroOvosInfraRepository - consultaProducaoDiariaPorGalinha");
+        return registroOvos;
     }
 }

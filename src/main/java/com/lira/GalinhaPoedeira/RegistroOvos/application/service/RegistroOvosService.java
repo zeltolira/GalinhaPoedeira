@@ -12,6 +12,6 @@ import java.util.UUID;
 
 public interface RegistroOvosService {
     RegistroOvosResponse registrarOvos(UUID idGalinha, RegistroOvosRequest registroOvosRequest);
-    List<ProducaoPorDataResponse> consultaProducaoPorData(LocalDate data);
     List<ProducaoMensalResponse> consultaProducaoMensal(YearMonth data);
+    void deleteOvoById(UUID id);
 }
