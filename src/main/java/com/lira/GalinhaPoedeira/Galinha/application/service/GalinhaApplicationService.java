@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -66,23 +67,48 @@ public class GalinhaApplicationService implements GalinhaService {
 
     }
 
+
     @Override
     public List<GalinhaDetalhadoResponse> consultaProducaoDiariaPorGalinha(LocalDate data) {
         log.info("[inicia] GalinhaApplicationService - consultaProducaoDiariaPorGalinha");
+
+        // Consulta todos os registros de ovos para a data especificada
         List<RegistroOvos> listRegistroOvos = registroOvoRepository.consultaProducaoDiariaPorGalinha(data);
-        log.info("[teste] GalinhaApplicationService - consultaProducaoDiariaPorGalinha");
+
+        // Agrupa os registros de ovos por galinha
         Map<UUID, Galinha> galinhasMap = new HashMap<>();
-        for (RegistroOvos registroOvos : listRegistroOvos){
-            Galinha galinha = registroOvos.getGalinha();
-            if (!galinhasMap.containsKey(galinha.getIdGalinha())){
-                Galinha novaGalinha = new Galinha(galinha);
-                galinhasMap.put(novaGalinha.getIdGalinha(), novaGalinha);
-            }
-            galinhasMap.get(galinha.getIdGalinha()).getRegistroOvos().add(registroOvos);
+        for (RegistroOvos registro : listRegistroOvos) {
+            Galinha galinha = registro.getGalinha();
+            galinhasMap.computeIfAbsent(galinha.getIdGalinha(), id -> new Galinha(galinha))
+                    .getRegistroOvos().add(registro);
         }
-        List<Galinha> galinhas = new ArrayList<>(galinhasMap.values());
-        List<GalinhaDetalhadoResponse> galinhaDetalhadoResponse = GalinhaDetalhadoResponse.converter(galinhas);
+        
+        // Converte o mapa de galinhas para a lista de respostas detalhadas
+        List<GalinhaDetalhadoResponse> galinhaDetalhadoResponses = galinhasMap.values().stream()
+                .map(GalinhaDetalhadoResponse::new)
+                .collect(Collectors.toList());
+
         log.info("[finaliza] GalinhaApplicationService - consultaProducaoDiariaPorGalinha");
-        return galinhaDetalhadoResponse;
+        return galinhaDetalhadoResponses;
     }
+
+
+//    public List<GalinhaDetalhadoResponse> consultaProducaoDiariaPorGalinha(LocalDate data) {
+//        log.info("[inicia] GalinhaApplicationService - consultaProducaoDiariaPorGalinha");
+//        List<RegistroOvos> listRegistroOvos = registroOvoRepository.consultaProducaoDiariaPorGalinha(data);
+//        log.info("[teste] GalinhaApplicationService - consultaProducaoDiariaPorGalinha");
+//        Map<UUID, Galinha> galinhasMap = new HashMap<>();
+//        for (RegistroOvos registroOvos : listRegistroOvos){
+//            Galinha galinha = registroOvos.getGalinha();
+//            if (!galinhasMap.containsKey(galinha.getIdGalinha())){
+//                Galinha novaGalinha = new Galinha(galinha);
+//                galinhasMap.put(novaGalinha.getIdGalinha(), novaGalinha);
+//            }
+//            galinhasMap.get(galinha.getIdGalinha()).getRegistroOvos().add(registroOvos);
+//        }
+//        List<Galinha> galinhas = new ArrayList<>(galinhasMap.values());
+//        List<GalinhaDetalhadoResponse> galinhaDetalhadoResponse = GalinhaDetalhadoResponse.converter(galinhas);
+//        log.info("[finaliza] GalinhaApplicationService - consultaProducaoDiariaPorGalinha");
+//        return galinhaDetalhadoResponse;
+//    }
 }

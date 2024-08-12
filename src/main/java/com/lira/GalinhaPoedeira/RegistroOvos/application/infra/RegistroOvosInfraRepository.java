@@ -34,7 +34,8 @@ public class RegistroOvosInfraRepository implements RegistroOvosRepository {
     public ProducaoMensalResponse consultaProducaoMensal(LocalDate data) {
         log.info("[inicia] RegistroOvosInfraRepository - consultaProducaoMensal");
         YearMonth mesAno = YearMonth.from(data);
-        List<RegistroOvos> producao = registaOvosSpringDataJPARepository.findByDataProducaoBetween(mesAno.atDay(1), mesAno.atEndOfMonth());
+        List<RegistroOvos> producao = registaOvosSpringDataJPARepository.
+                findByDataProducaoBetween(mesAno.atDay(1), mesAno.atEndOfMonth());
 
         int producaoMensal = producao.stream()
                 .mapToInt(RegistroOvos::getQuantidade)
@@ -45,6 +46,7 @@ public class RegistroOvosInfraRepository implements RegistroOvosRepository {
 
     @Override
     public RegistroOvos findById(UUID id) {
+
         return registaOvosSpringDataJPARepository.findById(id).orElse(null);
     }
 
