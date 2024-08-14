@@ -5,6 +5,8 @@ import com.lira.GalinhaPoedeira.Galinha.application.api.request.GalinhaRequest;
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaDetalhadoResponse;
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaListReponse;
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaResponse;
+import com.lira.GalinhaPoedeira.Galinha.domain.Galinha;
+import com.lira.GalinhaPoedeira.Galinha.domain.StatusGalinha;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,4 +19,6 @@ public interface GalinhaService {
     void patchGalinhaById(UUID idGalinha, GalinhaPatchRequest galinhaPatchRequest);
     void deletaGalinha(UUID idGalinha);
     List<GalinhaDetalhadoResponse> consultaProducaoDiariaPorGalinha(LocalDate data);
+    void mudaStatusParaInativa(UUID idGalinha);
+    void mudaStatusParaAtiva(UUID idGalinha);
 }

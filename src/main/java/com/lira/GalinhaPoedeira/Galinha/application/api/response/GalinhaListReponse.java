@@ -1,6 +1,7 @@
 package com.lira.GalinhaPoedeira.Galinha.application.api.response;
 
 import com.lira.GalinhaPoedeira.Galinha.domain.Galinha;
+import com.lira.GalinhaPoedeira.Galinha.domain.StatusGalinha;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
@@ -18,6 +19,8 @@ public class GalinhaListReponse {
     private String nomeGalinha;
     private LocalDate dataNascimento;
 
+    private StatusGalinha statusGalinha;
+
     public static List<GalinhaListReponse> converte(List<Galinha> galinhas) {
         return galinhas.stream()
                 .map(GalinhaListReponse::new)
@@ -28,5 +31,6 @@ public class GalinhaListReponse {
         this.idGalinha = galinha.getIdGalinha();
         this.nomeGalinha = galinha.getNomeGalinha();
         this.dataNascimento = galinha.getDataNascimento();
+        this.statusGalinha = galinha.getStatusGalinha();
     }
 }

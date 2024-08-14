@@ -26,9 +26,9 @@ public class RegistroOvosApplicationService implements RegistroOvosService {
     public RegistroOvosResponse registrarOvos(UUID idGalinha, RegistroOvosRequest registroOvosRequest) {
         log.info("[inicia] RegistroOvosApplicationService - registrarOvos");
         Galinha galinha = galinhaRepository.getGalinhaById(idGalinha);
-//        if (galinha.getStatus() != StatusGalinha.ATIVA){
-//            throw new IllegalStateException("A galinha está inativa e não pode produzir ovos");
-//        }
+        if (!galinha.podeProduzirOvos()) {
+            throw new IllegalStateException("A galinha está inativa e não pode produzir ovos.");
+        }
         RegistroOvos registroOvos = registroOvosRepository.salvaOvos(new RegistroOvos(galinha, registroOvosRequest));
         log.info("[finaliza] RegistroOvosApplicationService - registrarOvos");
         return new RegistroOvosResponse(registroOvos);

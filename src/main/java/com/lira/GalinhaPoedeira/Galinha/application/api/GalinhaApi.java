@@ -5,8 +5,11 @@ import com.lira.GalinhaPoedeira.Galinha.application.api.request.GalinhaRequest;
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaDetalhadoResponse;
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaListReponse;
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaResponse;
+import com.lira.GalinhaPoedeira.Galinha.domain.Galinha;
+import com.lira.GalinhaPoedeira.Galinha.domain.StatusGalinha;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,5 +43,13 @@ public interface GalinhaApi {
     @GetMapping("/producao-diaria")
     @ResponseStatus(code = HttpStatus.OK)
     List<GalinhaDetalhadoResponse> consultaProducaoDiariaPorGalinha(@RequestParam("data") LocalDate data);
+
+    @PatchMapping("/{idGalinha}/inativa")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void mudaStatusParaInativa(@PathVariable UUID idGalinha);
+
+    @PatchMapping("/{idGalinha}/ativa")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void mudaStatusParaAtiva(@PathVariable UUID idGalinha);
 
 }

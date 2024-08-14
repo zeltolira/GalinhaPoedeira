@@ -6,8 +6,11 @@ import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaDetalhad
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaListReponse;
 import com.lira.GalinhaPoedeira.Galinha.application.api.response.GalinhaResponse;
 import com.lira.GalinhaPoedeira.Galinha.application.service.GalinhaService;
+import com.lira.GalinhaPoedeira.Galinha.domain.Galinha;
+import com.lira.GalinhaPoedeira.Galinha.domain.StatusGalinha;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
@@ -68,4 +71,20 @@ public class GalinhaController implements GalinhaApi {
         log.info("[finaliza] GalinhaController - consultaProducaoDiariaPorGalinha");
         return galinhaDetalhadoResponse;
     }
+
+    @Override
+    public void mudaStatusParaInativa(UUID idGalinha) {
+        log.info("[inicia] GalinhaController - mudaStatusParaInativa");
+        galinhaService.mudaStatusParaInativa(idGalinha);
+        log.info("[finaliza] GalinhaController - mudaStatusParaInativa");
+    }
+
+    @Override
+    public void mudaStatusParaAtiva(UUID idGalinha) {
+        log.info("[inicia] GalinhaController - mudaStatusParaAtiva");
+        galinhaService.mudaStatusParaAtiva(idGalinha);
+        log.info("[finaliza] GalinhaController - mudaStatusParaAtiva");
+
+    }
+
 }

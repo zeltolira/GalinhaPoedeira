@@ -32,6 +32,8 @@ public class Galinha {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
+    @Enumerated(EnumType.STRING)
+    private StatusGalinha statusGalinha;
     private LocalDateTime dataHoraCriacaoGalinha;
     private LocalDateTime dataHoraUltimaAlteracaoGalinha;
 
@@ -46,18 +48,32 @@ public class Galinha {
         this.dataHoraCriacaoGalinha = galinha.getDataHoraCriacaoGalinha();
         this.dataHoraUltimaAlteracaoGalinha = galinha.getDataHoraUltimaAlteracaoGalinha();
         this.registroOvos = new ArrayList<>();
+        this.statusGalinha = getStatusGalinha();
     }
 
     public Galinha(GalinhaRequest galinhaRequest) {
         this.nomeGalinha = galinhaRequest.getNomeGalinha();
         this.dataNascimento = galinhaRequest.getDataNascimento();
         this.dataHoraCriacaoGalinha = LocalDateTime.now();
+        this.statusGalinha = galinhaRequest.getStatusGalinha();
 
     }
 
     public void patchGalinha(GalinhaPatchRequest galinhaPatchRequest) {
         this.nomeGalinha = galinhaPatchRequest.getNomeGalinha();
         this.dataNascimento = galinhaPatchRequest.getDataNascimento();
+        this.dataHoraUltimaAlteracaoGalinha = LocalDateTime.now();
     }
 
+    public void mudaStatusParaInativa() {
+        this.statusGalinha = StatusGalinha.INATIVA;
+    }
+    public void mudaStatusParaAtiva() {
+        this.statusGalinha = StatusGalinha.ATIVA;
+    }
+
+
+    public boolean podeProduzirOvos() {
+        return this.statusGalinha.podeProduzirOvos();
+    }
 }

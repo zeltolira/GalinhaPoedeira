@@ -1,5 +1,6 @@
 package com.lira.GalinhaPoedeira.Galinha.application.api.request;
 
+import com.lira.GalinhaPoedeira.Galinha.domain.StatusGalinha;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,4 +14,6 @@ public class GalinhaPatchRequest {
     @NotNull
     private String nomeGalinha;
     private LocalDate dataNascimento;
+
+
 }

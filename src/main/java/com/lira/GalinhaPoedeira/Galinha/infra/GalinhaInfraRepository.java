@@ -20,9 +20,6 @@ public class GalinhaInfraRepository implements GalinhaRepository {
     @Override
     public Galinha saveGalinha(Galinha galinha) {
         log.info("[inicia] GalinhaInfraRepository - saveGalinha");
-        if (galinhaSpringDataJPARepository.existsByNomeGalinha(galinha.getNomeGalinha())){
-            throw new RuntimeException("Já existe uma Galinha com esse nome!");
-        }
         galinhaSpringDataJPARepository.save(galinha);
         log.info("[finaliza] GalinhaInfraRepository - saveGalinha");
         return galinha;

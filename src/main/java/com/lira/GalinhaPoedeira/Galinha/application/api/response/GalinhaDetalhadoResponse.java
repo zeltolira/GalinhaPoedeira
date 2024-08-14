@@ -1,6 +1,7 @@
 package com.lira.GalinhaPoedeira.Galinha.application.api.response;
 
 import com.lira.GalinhaPoedeira.Galinha.domain.Galinha;
+import com.lira.GalinhaPoedeira.Galinha.domain.StatusGalinha;
 import com.lira.GalinhaPoedeira.RegistroOvos.application.api.response.RegistroOvosResponse;
 import lombok.Data;
 import lombok.ToString;
@@ -18,6 +19,7 @@ public class GalinhaDetalhadoResponse {
     private LocalDate dataNascimento;
     private List<RegistroOvosResponse> registroOvos;
     private Integer producaoGalinha;
+    private StatusGalinha statusGalinha = StatusGalinha.ATIVA;
 
     public GalinhaDetalhadoResponse(Galinha galinha) {
         this.idGalinha = galinha.getIdGalinha();
@@ -27,6 +29,7 @@ public class GalinhaDetalhadoResponse {
                 .map(RegistroOvosResponse::new)
                 .collect(Collectors.toList());
         this.producaoGalinha = calcularSomaOvos();
+        this.statusGalinha = StatusGalinha.ATIVA;
     }
 
     private Integer calcularSomaOvos() {

@@ -82,7 +82,7 @@ public class GalinhaApplicationService implements GalinhaService {
             galinhasMap.computeIfAbsent(galinha.getIdGalinha(), id -> new Galinha(galinha))
                     .getRegistroOvos().add(registro);
         }
-        
+
         // Converte o mapa de galinhas para a lista de respostas detalhadas
         List<GalinhaDetalhadoResponse> galinhaDetalhadoResponses = galinhasMap.values().stream()
                 .map(GalinhaDetalhadoResponse::new)
@@ -92,6 +92,23 @@ public class GalinhaApplicationService implements GalinhaService {
         return galinhaDetalhadoResponses;
     }
 
+    @Override
+    public void mudaStatusParaInativa(UUID idGalinha) {
+        log.info("[inicia] GalinhaApplicationService - mudaStatusParaInativa");
+        Galinha galinha = galinhaRepository.getGalinhaById(idGalinha);
+        galinha.mudaStatusParaInativa();
+        galinhaRepository.saveGalinha(galinha);
+        log.info("[finaliza] GalinhaApplicationService - mudaStatusParaInativa");
+        }
+    @Override
+    public void mudaStatusParaAtiva(UUID idGalinha) {
+        log.info("[inicia] GalinhaApplicationService - mudaStatusParaAtiva");
+        Galinha galinha = galinhaRepository.getGalinhaById(idGalinha);
+        galinha.mudaStatusParaAtiva();
+        galinhaRepository.saveGalinha(galinha);
+        log.info("[finaliza] GalinhaApplicationService - mudaStatusParaAtiva");
+        }
+}
 
 //    public List<GalinhaDetalhadoResponse> consultaProducaoDiariaPorGalinha(LocalDate data) {
 //        log.info("[inicia] GalinhaApplicationService - consultaProducaoDiariaPorGalinha");
@@ -111,4 +128,4 @@ public class GalinhaApplicationService implements GalinhaService {
 //        log.info("[finaliza] GalinhaApplicationService - consultaProducaoDiariaPorGalinha");
 //        return galinhaDetalhadoResponse;
 //    }
-}
+
